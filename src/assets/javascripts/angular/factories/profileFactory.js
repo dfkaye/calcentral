@@ -12,7 +12,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   // var urlLanguageCode = '/api/campus_solutions/language_code';
   var urlLanguageCode = '/dummy/json/language_code.json';
   //
-  var urlPerson = '/api/edos/student';
+  // var urlPerson = '/api/edos/student';
+  var urlPerson = '/dummy/json/student_with_languages.json';
+  //
   var urlStates = '/api/campus_solutions/state';
   var urlTypes = '/api/campus_solutions/translate';
   var urlTypesAddress = '/api/campus_solutions/address_type';

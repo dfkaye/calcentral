@@ -1,0 +1,59 @@
+{
+  "feed": {
+    "student": {
+      "languages": [
+        {
+          "code": "LEN",
+          "name": "English",
+          "native": true,
+          "translate": false,
+          "teach": true,
+          "speakingProficiency": {
+            "description": "high"
+          },
+          "readingProficiency": {
+            "description": "high"
+          },
+          "writingProficiency": {
+            "description": "medium"
+          },
+          "evaluationDate": "2012-11-27"
+        },
+        {
+          "code": "LAN",
+          "name": "Armenian",
+          "native": false,
+          "translate": true,
+          "teach": false,
+          "speakingProficiency": {
+            "description": "medium"
+          },
+          "readingProficiency": {
+            "description": "medium"
+          },
+          "writingProficiency": {
+            "description": "medium"
+          },
+          "evaluationDate": "2016-01-12"
+        },
+        {
+          "code": "CC",
+          "name": "Chinese (Cantonese)",
+          "native": false,
+          "translate": false,
+          "teach": false,
+          "speakingProficiency": {
+            "description": "low"
+          },
+          "readingProficiency": {
+            "description": "low"
+          },
+          "writingProficiency": {
+            "description": "low"
+          },
+          "evaluationDate": "2016-01-12"
+        }
+      ]
+    }
+  }
+}

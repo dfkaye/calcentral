@@ -21,17 +21,40 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     return sortedCodes;
   };
 
-  profileFactory.getLanguageCode().then(function(data) {
-    var languageCodes = sortLanguageCodes(data.data.feed.accomplishments);
-
-    angular.extend($scope, {
-      languageCodes: {
-        content: languageCodes
-      }
+  var fetchLanguageCodes = function() {
+    // i like the promise api here...
+    return profileFactory.getLanguageCode().then(function(data) {
+      var languageCodes = sortLanguageCodes(data.data.feed.accomplishments);
+      console.warn('languagesController');
+      angular.extend($scope, {
+        languageCodes: {
+          content: languageCodes
+        }
+      });
+      console.warn($scope.languageCodes.content);
     });
-    console.log('languagesController');
-    console.warn($scope.languageCodes.content);
-  });
+  };
+
+  var enableEditor = function() {
+    $scope.languages.editorEnabled = true;
+  };
+
+  var disableEditor = function() {
+    $scope.languages.editorEnabled = false;
+  };
+
+  $scope.showEditor = function() {
+    if (!$scope.languageCodes) {
+      // lazy request codes once
+      fetchLanguageCodes().then(enableEditor);
+    } else {
+      enableEditor();
+    }
+  };
+
+  $scope.closeEditor = function() {
+    disableEditor();
+  };
 
   var parseLevels = function(languages) {
     languages = _.map(languages, function(language) {
@@ -53,7 +76,9 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     var languages = parseLevels(person.languages);
     angular.extend($scope, {
       languages: {
-        content: languages
+        content: languages,
+        supported: true,
+        editorEnabled: false
       }
     });
   };
