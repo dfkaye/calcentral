@@ -13,6 +13,26 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     translate: 'translator'
   };
 
+  var sortLanguageCodes = function(codes) {
+    var sortedCodes = codes.sort(function(a, b) {
+      return a.descr > b.descr;
+    });
+
+    return sortedCodes;
+  };
+
+  profileFactory.getLanguageCode().then(function(data) {
+    var languageCodes = sortLanguageCodes(data.data.feed.accomplishments);
+
+    angular.extend($scope, {
+      languageCodes: {
+        content: languageCodes
+      }
+    });
+    console.log('languagesController');
+    console.warn($scope.languageCodes.content);
+  });
+
   var parseLevels = function(languages) {
     languages = _.map(languages, function(language) {
       if (!language.levels) {

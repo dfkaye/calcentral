@@ -8,6 +8,10 @@ var angular = require('angular');
 angular.module('calcentral.factories').factory('profileFactory', function(apiService, $http) {
   var urlAddressFields = '/api/campus_solutions/address_label';
   var urlCountries = '/api/campus_solutions/country';
+  //
+  // var urlLanguageCode = '/api/campus_solutions/language_code';
+  var urlLanguageCode = '/dummy/json/language_code.json';
+  //
   var urlPerson = '/api/edos/student';
   var urlStates = '/api/campus_solutions/state';
   var urlTypes = '/api/campus_solutions/translate';
@@ -38,6 +42,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   };
   var getCountries = function(options) {
     return apiService.http.request(options, urlCountries);
+  };
+  var getLanguageCode = function(options) {
+    return apiService.http.request(options, urlLanguageCode);
   };
   var getPerson = function(options) {
     return apiService.http.request(options, urlPerson);
@@ -80,6 +87,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     deletePhone: deletePhone,
     getCountries: getCountries,
     getAddressFields: getAddressFields,
+    getLanguageCode: getLanguageCode,
     getPerson: getPerson,
     getStates: getStates,
     getTypesAddress: getTypesAddress,

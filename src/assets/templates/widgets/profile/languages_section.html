@@ -1,7 +1,7 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="LanguagesSectionController">
   <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}">
     </div>
-  <div class="cc-page-widget-profile-section-content">
+  <!--<div class="cc-page-widget-profile-section-content">
     <div data-ng-repeat="language in languages.content" class="cc-page-widget-profile-section-content-item">
       <div>
         <strong data-ng-bind="language.name"></strong>
@@ -16,5 +16,21 @@
     <div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
       There are no languages available.
     </div>
+  </div>-->
+  <div class="cc-page-widget-profile-section-label">add a language</div>
+  <div class="cc-page-widget-profile-section-content">
+    <b style="color: fuchsia; border: 1px solid aqua;">language codes </b>
+    <select data-ng-if="languageCodes">
+      <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
+        {{language.descr}}
+      </option>
+    </select>
+    <ul>
+      <li data-ng-repeat="language in languageCodes.content">
+        {{language.accomplishment}}: {{language.descr}}
+      </li>
+    </table>
+    <!--<select data-ng-options="language.accomplishment as language.descr for language in languages.content"
+    data-ng-model="currentObject.data.type.code" required aria-required="true" />-->
   </div>
 </div>
