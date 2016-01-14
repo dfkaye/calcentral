@@ -40,10 +40,12 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var closeEditor = function() {
+    $scope.adding = false;
+    $scope.errorMessage = '';
     $scope.languages.editorEnabled = false;
   };
 
-  $scope.showEdit = function() {
+  $scope.showEdit = function(data) {
     if (!$scope.languageCodes) {
       // lazy request codes once
       fetchLanguageCodes().then(openEditor);
@@ -51,12 +53,21 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       openEditor();
     }
   };
-
+  $scope.showAdd = function() {
+    $scope.adding = true;
+    $scope.showEdit();
+  };
   $scope.cancelEdit = function() {
     closeEditor();
   };
 
-  $scope.save = function(data) {
+  $scope.saveItem = function(data) {
+    console.warn(data);
+    $scope.errorMessage = 'there was an error';
+    // closeEditor();
+  };
+
+  $scope.deleteItem = function(data) {
     console.warn(data);
     closeEditor();
   };
@@ -83,7 +94,8 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       languages: {
         content: languages,
         supported: true,
-        editorEnabled: false
+        editorEnabled: false,
+        errorMessage: ''
       }
     });
   };

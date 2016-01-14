@@ -1,24 +1,83 @@
 
-<!--<div class="cc-page-widget-profile-section-label">add a language</div>-->
-<div class="cc-page-widget-profile-section-content" data-ng-if="languages.editorEnabled">
-  <div class="cc-page-widget-profile-section-label">languages section editor</div>
-  <p>design assumptions</p>
-  <ul style="list-style: decimal inside;">
-    <li>should show a list of languages, if any associated, each with edit controls</li>
-    <li>should be an Add control top right</li>
-    <li>form: edit one item at a time</li>
-    <li>for Add(), form field uses default values</li>
-    <li>save|cancel: linear (each item)</li>
-    <li>field validation? invalid state messages?</li>
-    <li>on successful save or cancel, refresh and revert to list view</li>
-    <li>on failed save, show global error message ???</li>
-  </ul>
-  <form data-ng-submit="save(currentObject.data)" name="cc_page_widget_languages_section">
-    <select data-ng-if="languageCodes" required aria-required="true">
-      <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
-        {{language.descr}}
-      </option>
-    </select>
+<div class="cc-page-widget-profile-section-content-edit" data-ng-if="languages.editorEnabled">
+  <form data-ng-submit="saveItem(currentObject.data)" name="cc_page_widget_languages_section">
+    <div>
+      <strong>Language code</strong>
+    </div>
+    <div>
+      <input name="cc-language-code-name" id="cc-language-code-name" value="language-code" />
+      <span>cc-language-code-name</span>
+    </div>
+
+    <div>
+      <select data-ng-if="languageCodes" required aria-required="true" name="cc-language-codes-select">
+        <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
+          {{language.descr}}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <strong>Speaking Proficiency</strong>
+    </div>
+    <div>
+      <select>
+        <option value="high">high</option>
+        <option value="medium">medium</option>
+        <option value="low">low</option>
+      </select>
+    </div>
+
+    <div>
+      <strong>Reading Proficiency</strong>
+    </div>
+    <div>
+      <select>
+        <option value="high">high</option>
+        <option value="medium">medium</option>
+        <option value="low">low</option>
+      </select>
+    </div>
+
+    <div>
+      <strong>Writing Proficiency</strong>
+    </div>
+    <div>
+      <select>
+        <option value="high">high</option>
+        <option value="medium">medium</option>
+        <option value="low">low</option>
+      </select>
+    </div>
+
+    <div>
+      <strong>Is this your native language?</strong>
+    </div>
+    <div>
+      <label><input type="radio" value="" /><span>Yes</span></label>
+      <label><input type="radio" value="" /><span>No</span></label>
+    </div>
+
+    <div>
+      <strong>Are you able to translate this language into your native tongue?</strong>
+    </div>
+    <div>
+      <label><input type="radio" value="" /><span>Yes</span></label>
+      <label><input type="radio" value="" /><span>No</span></label>
+    </div>
+
+    <div>
+      <strong>Are you able to teach in this language?</strong>
+    </div>
+    <div>
+      <label><input type="radio" value="" /><span>Yes</span></label>
+      <label><input type="radio" value="" /><span>No</span></label>
+    </div>
+
+    <div class="cc-page-widget-profile-section-error cc-text-red" data-ng-if="errorMessage">
+      <i class="cc-icon-red fa fa-exclamation-circle"></i>
+      <span data-ng-bind="errorMessage"></span>
+    </div>
 
     <div>
       <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_basic_preferred_name.$invalid || isSaving">
@@ -28,13 +87,8 @@
       <button class="cc-button" data-ng-click="cancelEdit()" data-ng-disabled="isSaving">Cancel</button>
     </div>
 
-    <ul>
-      <li data-ng-repeat="language in languageCodes.content">
-        accomplishment: {{language.accomplishment}}, descr: {{language.descr}}
-      </li>
-    </ul>
-    <select data-ng-options="language.accomplishment as language.descr for language in languages.content"
-    data-ng-model="currentObjectS.languages.content" required aria-required="true" />
+    <div data-ng-if="!adding">
+      (<button class="cc-button-link" data-ng-click="deleteItem(currentObject.data)">Delete language credential</span></button>)
+    </div>
   </form>
-
 </div>
