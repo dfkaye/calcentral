@@ -1,5 +1,5 @@
 
-<div class="cc-page-widget-profile-section-content-edit" data-ng-if="languages.editorEnabled">
+<div class="cc-page-widget-profile-section-content-edit" data-ng-if="editorEnabled">
   <form data-ng-submit="saveItem(currentObject.data)" name="cc_page_widget_languages_section">
     <div>
       <strong>Language code</strong>
@@ -74,7 +74,7 @@
       <label><input type="radio" value="" /><span>No</span></label>
     </div>
 
-    <div class="cc-page-widget-profile-section-error cc-text-red" data-ng-if="errorMessage">
+    <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
       <i class="cc-icon-red fa fa-exclamation-circle"></i>
       <span data-ng-bind="errorMessage"></span>
     </div>

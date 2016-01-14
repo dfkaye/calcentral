@@ -36,13 +36,13 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var openEditor = function() {
-    $scope.languages.editorEnabled = true;
+    $scope.editorEnabled = true;
   };
 
   var closeEditor = function() {
     $scope.adding = false;
-    $scope.errorMessage = '';
-    $scope.languages.editorEnabled = false;
+    $scope.errorMessage = false;
+    $scope.editorEnabled = false;
   };
 
   $scope.showEdit = function(data) {
@@ -53,10 +53,12 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       openEditor();
     }
   };
+
   $scope.showAdd = function() {
     $scope.adding = true;
     $scope.showEdit();
   };
+
   $scope.cancelEdit = function() {
     closeEditor();
   };
@@ -93,10 +95,13 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     angular.extend($scope, {
       languages: {
         content: languages,
-        supported: true,
-        editorEnabled: false,
-        errorMessage: ''
-      }
+        supported: true
+      },
+      currentObject: {},
+      editorEnabled: false,
+      errorMessage: false,
+      adding: false,
+      isSaving: false
     });
   };
 

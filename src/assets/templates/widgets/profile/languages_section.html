@@ -1,21 +1,21 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="LanguagesSectionController">
-  <div class="cc-page-widget-profile-section-lebel" data-ng-if="!languages.editorEnabled">
-    <button class="cc-button-link" data-ng-click="showAdd()" data-ng-if="!languages.content.length">+ Add Language</button>
-  </div>
-  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}">
-  </div>
 
 
+  <div class="cc-page-widget-profile-section-label">
+    <button class="cc-button-link" data-ng-click="showAdd()" data-ng-if="!languages.content.length && !editorEnabled">+ Add Language</button>
+
+    <span data-ng-if="languages.content.length || editorEnabled" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}"></span>
+  </div>
   <div class="cc-page-widget-profile-section-content" data-ng-if="languages.supported">
-    <div class="cc-page-widget-profile-section-content-item" data-ng-if="languages.editorEnabled">
+    <div class="cc-page-widget-profile-section-content-item" data-ng-if="editorEnabled">
       <div data-ng-include="'widgets/profile/languages_section_editor.html'"></div>
     </div>
 
-    <div class="cc-page-widget-profile-section-add" data-ng-if="!languages.editorEnabled">
+    <div class="cc-page-widget-profile-section-add" data-ng-if="!editorEnabled">
       <button class="cc-button-link cc-right" data-ng-click="showAdd()" data-ng-if="languages.content.length">+ Add <span class="cc-visuallyhidden">Language</span></button>
     </div>
 
-    <div class="cc-page-widget-profile-section-content-item" data-ng-repeat="language in languages.content" data-ng-if="!languages.editorEnabled">
+    <div class="cc-page-widget-profile-section-content-item" data-ng-repeat="language in languages.content" data-ng-if="!editorEnabled">
       <div>
         <strong data-ng-bind="language.name"></strong>
         <span data-ng-if="language.levels.length">
@@ -28,9 +28,9 @@
       <button class="cc-button-link" data-ng-click="showEdit()" data-ng-if="languages.content.length">Edit <span class="cc-visuallyhidden">{{ language.name }} credential</span></button>
     </div>
 
-    <div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
+    <!--<div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
       There are no languages available.
-    </div>
+    </div>-->
 
     <div>
       <span>design questions</span>
