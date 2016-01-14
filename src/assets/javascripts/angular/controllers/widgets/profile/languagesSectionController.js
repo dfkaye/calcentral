@@ -25,13 +25,14 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     // i like the promise api here...
     return profileFactory.getLanguageCode().then(function(data) {
       var languageCodes = sortLanguageCodes(data.data.feed.accomplishments);
-      console.warn('languagesController');
+      // console.warn('languagesController');
       angular.extend($scope, {
         languageCodes: {
-          content: languageCodes
+          content: languageCodes,
+          selectedCode: ''
         }
       });
-      console.warn($scope.languageCodes.content);
+      // console.warn($scope.languageCodes.content);
     });
   };
 
@@ -45,7 +46,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     $scope.editorEnabled = false;
   };
 
-  $scope.showEdit = function(data) {
+  $scope.showEdit = function() {
     if (!$scope.languageCodes) {
       // lazy request codes once
       fetchLanguageCodes().then(openEditor);
@@ -63,14 +64,15 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     closeEditor();
   };
 
-  $scope.saveItem = function(data) {
-    console.warn(data);
+  $scope.saveItem = function() {
+    // console.log($scope.languageCodes.selectedCode)
+    // console.warn(data);
     $scope.errorMessage = 'there was an error';
     // closeEditor();
   };
 
-  $scope.deleteItem = function(data) {
-    console.warn(data);
+  $scope.deleteItem = function() {
+    // console.warn(data);
     closeEditor();
   };
 

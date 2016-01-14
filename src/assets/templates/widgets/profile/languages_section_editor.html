@@ -5,12 +5,12 @@
       <strong>Language code</strong>
     </div>
     <div>
-      <input name="cc-language-code-name" id="cc-language-code-name" value="language-code" />
+      <input name="cc-language-code-name" id="cc-language-code-name" value="language-code" data-ng-bind="currentObject" />
       <span>cc-language-code-name</span>
     </div>
 
     <div>
-      <select data-ng-if="languageCodes" required aria-required="true" name="cc-language-codes-select">
+      <select data-ng-if="languageCodes" data-ng-model="languageCodes.selectedCode" required aria-required="true" name="cc-language-code-select" id="cc-language-code-select">
         <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
           {{language.descr}}
         </option>
