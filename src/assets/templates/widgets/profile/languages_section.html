@@ -2,18 +2,19 @@
   <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}">
   </div>
 
-
   <div class="cc-page-widget-profile-section-content" data-ng-if="languages.supported">
 
     <div class="cc-page-widget-profile-section-content-item" data-ng-if="languages.editorEnabled" >
       <div data-ng-include="'widgets/profile/languages_section_editor.html'"></div>
     </div>
 
+<button class="cc-button-link" data-ng-click="showEdit()">+ Add Language</span></button>
+
     <div class="cc-page-widget-profile-section-add" data-ng-if="!languages.editorEnabled">
-      <button class="cc-button-link" data-ng-click="showEditor()" data-ng-if="languages.content.length">Edit <span class="cc-visuallyhidden">Your Languages</span></button>
-      <button class="cc-button-link" data-ng-click="showEditor()" data-ng-if="!languages.content.length">Add <span class="cc-visuallyhidden">Your Languages</span></button>
+      <button class="cc-button-link" data-ng-click="showEdit()" data-ng-if="languages.content.length">Edit <span class="cc-visuallyhidden">Your Languages</span></button>
+      <button class="cc-button-link" data-ng-click="showEdit()" data-ng-if="!languages.content.length">+ Add <span class="cc-visuallyhidden">Your Languages</span></button>
     </div>
-    
+
     <div class="cc-page-widget-profile-section-content-item" data-ng-repeat="language in languages.content" data-ng-if="!languages.editorEnabled">
       <div>
         <strong data-ng-bind="language.name"></strong>
@@ -27,6 +28,8 @@
     </div>
     <div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
       There are no languages available.
+      <button class="cc-button-link" data-ng-click="showEdit()">+ Add Language</span></button>
+
     </div>
 
   </div>

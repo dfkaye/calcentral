@@ -14,7 +14,6 @@ angular.module('calcentral.controllers').controller('LanguagesController', funct
 
   var loadInformation = function() {
     profileFactory.getPerson().then(function(data) {
-      console.warn(data);
       $scope.languagesInformation.isLoading = false;
       $scope.languagesInformation.isErrored = _.get(data, 'data.errored');
     });

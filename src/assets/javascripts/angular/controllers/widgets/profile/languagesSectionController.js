@@ -35,25 +35,30 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     });
   };
 
-  var enableEditor = function() {
+  var openEditor = function() {
     $scope.languages.editorEnabled = true;
   };
 
-  var disableEditor = function() {
+  var closeEditor = function() {
     $scope.languages.editorEnabled = false;
   };
 
-  $scope.showEditor = function() {
+  $scope.showEdit = function() {
     if (!$scope.languageCodes) {
       // lazy request codes once
-      fetchLanguageCodes().then(enableEditor);
+      fetchLanguageCodes().then(openEditor);
     } else {
-      enableEditor();
+      openEditor();
     }
   };
 
-  $scope.closeEditor = function() {
-    disableEditor();
+  $scope.cancelEdit = function() {
+    closeEditor();
+  };
+
+  $scope.save = function(data) {
+    console.warn(data);
+    closeEditor();
   };
 
   var parseLevels = function(languages) {
