@@ -1,21 +1,16 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="LanguagesSectionController">
-
-
   <div class="cc-page-widget-profile-section-label">
-    <button class="cc-button-link" data-ng-click="showAdd()" data-ng-if="!languages.content.length && !editorEnabled">+ Add Language</button>
-
-    <span data-ng-if="languages.content.length || editorEnabled" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}"></span>
+    <button class="cc-button-link" data-ng-click="showAdd()" data-ng-if="!items.content.length && !items.editorEnabled">+ Add Language</button>
+    <span data-ng-if="items.content.length || items.editorEnabled" data-ng-pluralize count="items.content.length" when="{'1': 'Language', 'other': 'Languages'}"></span>
   </div>
-  <div class="cc-page-widget-profile-section-content" data-ng-if="languages.supported">
-    <div class="cc-page-widget-profile-section-content-item" data-ng-if="editorEnabled">
+  <div class="cc-page-widget-profile-section-content" data-ng-if="items.loaded">
+    <div class="cc-page-widget-profile-section-content-item" data-ng-if="items.editorEnabled">
       <div data-ng-include="'widgets/profile/languages_section_editor.html'"></div>
     </div>
-
-    <div class="cc-page-widget-profile-section-add" data-ng-if="!editorEnabled">
-      <button class="cc-button-link cc-right" data-ng-click="showAdd()" data-ng-if="languages.content.length">+ Add <span class="cc-visuallyhidden">Language</span></button>
+    <div class="cc-page-widget-profile-section-add" data-ng-if="!items.editorEnabled">
+      <button class="cc-button-link cc-right" data-ng-click="showAdd()" data-ng-if="items.content.length">+ Add <span class="cc-visuallyhidden">Language</span></button>
     </div>
-
-    <div class="cc-page-widget-profile-section-content-item" data-ng-repeat="language in languages.content" data-ng-if="!editorEnabled">
+    <div class="cc-page-widget-profile-section-content-item" data-ng-repeat="language in items.content" data-ng-if="!items.editorEnabled">
       <div>
         <strong data-ng-bind="language.name"></strong>
         <span data-ng-if="language.levels.length">
@@ -25,29 +20,10 @@
       <div data-ng-if="language.speakingProficiency.description" data-ng-bind-template="Speaking Proficiency: {{language.speakingProficiency.description}}"></div>
       <div data-ng-if="language.readingProficiency.description" data-ng-bind-template="Reading Proficiency: {{language.readingProficiency.description}}"></div>
       <div data-ng-if="language.writingProficiency.description" data-ng-bind-template="Writing Proficiency: {{language.writingProficiency.description}}"></div>
-      <button class="cc-button-link" data-ng-click="showEdit()" data-ng-if="languages.content.length">Edit <span class="cc-visuallyhidden">{{ language.name }} credential</span></button>
+      <button class="cc-button-link" data-ng-click="showEdit(language)">Edit <span class="cc-visuallyhidden">{{ language.name }} credential</span></button>
     </div>
-
     <!--<div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
       There are no languages available.
     </div>-->
-
-    <div>
-      <span>design questions</span>
-      <ul style="list-style: decimal inside;">
-        <li>if no languages, show +Add Language link at top left</li>
-        <li>if languages, show +Add link at top right</li>
-        <li>for Add, show form with default values</li>
-        <li>for each language, show name, profieciencies, and edit link</li>
-        <li>form edit() one item at a time</li>
-        <li>form add/edit, hide the Add link (focus one task at a time)</li>
-        <li>form save|cancel: one item at a time</li>
-        <li>form delete: show only if "edit" not "add"</li>
-        <li>form open - show other languages in readonly - maybe cause screen clutter</li>
-        <li>field validation? invalid state messages?</li>
-        <li>on successful save or cancel, or delete, refresh and revert to list view</li>
-        <li>on failed save, show global error message? (where?)</li>
-      </ul>
-    </div>
   </div>
 </div>
