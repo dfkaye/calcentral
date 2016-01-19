@@ -5,51 +5,51 @@
         {
           "code": "LEN",
           "name": "English",
-          "native": true,
-          "translate": false,
-          "teach": true,
+          "native": "Y",
+          "translate": "N",
+          "teach": "Y",
           "speakingProficiency": {
-            "description": "high"
+            "description": "1"
           },
           "readingProficiency": {
-            "description": "high"
+            "description": "1"
           },
           "writingProficiency": {
-            "description": "medium"
+            "description": "2"
           },
           "evaluationDate": "2012-11-27"
         },
         {
           "code": "LAN",
           "name": "Armenian",
-          "native": false,
-          "translate": true,
-          "teach": false,
+          "native": "N",
+          "translate": "Y",
+          "teach": "N",
           "speakingProficiency": {
-            "description": "medium"
+            "description": "2"
           },
           "readingProficiency": {
-            "description": "medium"
+            "description": "2"
           },
           "writingProficiency": {
-            "description": "medium"
+            "description": "2"
           },
           "evaluationDate": "2016-01-12"
         },
         {
           "code": "CC",
           "name": "Chinese (Cantonese)",
-          "native": false,
-          "translate": false,
-          "teach": false,
+          "native": "N",
+          "translate": "N",
+          "teach": "N",
           "speakingProficiency": {
-            "description": "low"
+            "description": "3"
           },
           "readingProficiency": {
-            "description": "low"
+            "description": "3"
           },
           "writingProficiency": {
-            "description": "low"
+            "description": "3"
           },
           "evaluationDate": "2016-01-12"
         }

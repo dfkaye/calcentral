@@ -14,7 +14,7 @@
     </div>
     <div class="cc-select">
       <select data-ng-if="languageCodes" data-ng-model="currentObject.data.code" data-ng-pattern="/[a-z]{2,3}/i" id="cc_language_code_select" name="cc_language_code_select" required aria-required="true">
-        <option value="" disabled selected>Select a language...</option>
+        <option value="" disabled selected>Choose language...</option>
         <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
           {{language.descr}}
         </option>
@@ -25,10 +25,8 @@
       <label forId="cc_language_proficiency_speaking"><strong>Speaking Proficiency</strong></label>
     </div>
     <div class="cc-select">
-      <select id="cc_language_proficiency_speaking" name="cc_page_widget_languages_section_proficiency_speaking" data-ng-model="currentObject.data.speakingProficiency.description">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
+      <select id="cc_language_proficiency_speaking" name="cc_page_widget_languages_section_proficiency_speaking" data-ng-model="currentObject.data.speakingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
+        <option value="" disabled selected>Choose speaking proficiency...</option>
       </select>
     </div>
 
@@ -36,21 +34,17 @@
       <label forId="cc_language_proficiency_reading"><strong>Reading Proficiency</strong></label>
     </div>
     <div class="cc-select">
-      <select id="cc_language_proficiency_reading" name="cc_page_widget_languages_section_proficiency_reading" data-ng-model="currentObject.data.readingProficiency.description">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
+      <select id="cc_language_proficiency_reading" name="cc_page_widget_languages_section_proficiency_reading" data-ng-model="currentObject.data.readingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
+        <option value="" disabled selected>Choose reading proficiency...</option>
       </select>
     </div>
 
     <div>
       <label forId="cc_language_proficiency_writing"><strong>Writing Proficiency</strong></label>
     </div>
-    <div class="cc-">
-      <select id="cc_language_proficiency_writing" name="cc_page_widget_languages_section_proficiency_writing" data-ng-model="currentObject.data.writingProficiency.description">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
+    <div class="cc-select">
+      <select id="cc_language_proficiency_writing" name="cc_page_widget_languages_section_proficiency_writing" data-ng-model="currentObject.data.writingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
+        <option value="" disabled selected>Choose reading proficiency...</option>
       </select>
     </div>
 
@@ -58,24 +52,24 @@
       <strong>Is this your native language?</strong>
     </div>
     <div>
-      <label><input type="radio" data-ng-value="true" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>Yes</span></label>
-      <label><input type="radio" data-ng-value="false" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>No</span></label>
+      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>Yes</span></label>
+      <label><input type="radio" value="N" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>No</span></label>
     </div>
 
     <div>
       <strong>Are you able to translate this language into your native tongue?</strong>
     </div>
     <div>
-      <label><input type="radio" data-ng-value="true" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>Yes</span></label>
-      <label><input type="radio" data-ng-value="false" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>No</span></label>
+      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>Yes</span></label>
+      <label><input type="radio" value="N" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>No</span></label>
     </div>
 
     <div>
       <strong>Are you able to teach in this language?</strong>
     </div>
     <div >
-      <label><input type="radio" data-ng-value="true" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>Yes</span></label>
-      <label><input type="radio" data-ng-value="false" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>No</span></label>
+      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>Yes</span></label>
+      <label><input type="radio" value="N" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>No</span></label>
     </div>
 
 

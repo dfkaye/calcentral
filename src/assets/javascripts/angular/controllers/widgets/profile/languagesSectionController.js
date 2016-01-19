@@ -23,52 +23,77 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       content: [],
       loaded: false,
       selectedCode: ''
-    }
+    },
+    proficiencies: [
+      {
+        name: 'High',
+        value: '1'
+      },
+      {
+        name: 'Medium',
+        value: '2'
+      },
+      {
+        name: 'Low',
+        value: '3'
+      }
+    ]
   });
 
-  var closeEditor = function() {
-    $scope.addingItem = false;
+  var actionCompleted = function(data) {
+    apiService.profile.actionCompleted($scope, data, loadInformation);
+  };
 
-    apiService.profile.closeEditor($scope);
+  var saveCompleted = function(data) {
+    $scope.isSaving = false;
+    actionCompleted(data);
+  };
+
+  var saveLevel = function(level) {
+    return level || '';
+  };
+
+  var saveProficiency = function(proficiency) {
+    return proficiency && proficiency.description || '';
+  };
+
+  $scope.saveItem = function(item) {
+    apiService.profile.save($scope, profileFactory.postLanguage, {
+      languageCode: item.code,
+      isNative: saveLevel(item.native),
+      isTranslateToNative: saveLevel(item.translate),
+      isTeachLanguage: saveLevel(item.teach),
+      speakProf: saveProficiency(item.speakingProficiency),
+      readProf: saveProficiency(item.readingProficiency),
+      teachLang: saveProficiency(item.writingProficiency)
+    }).then(saveCompleted);
   };
 
   $scope.showEdit = function(item) {
     apiService.profile.showEdit($scope, item);
-    // console.warn($scope.currentObject);
   };
 
   $scope.showAdd = function() {
     $scope.addingItem = true;
-
-    apiService.profile.showAdd($scope, {
-      // code: $scope.languageCodes.content[0].accomplishment
-    });
+    apiService.profile.showAdd($scope, {});
   };
 
   $scope.cancelEdit = function() {
-    closeEditor();
+    $scope.addingItem = false;
+    $scope.isSaving = false;
+    apiService.profile.closeEditor($scope);
   };
 
-  $scope.saveItem = function(item) {
-  console.log(item);/*  {
-      languageCode: currentObject.data.code,
-      isNative: currentObject.data.native,
-      isTranslateToNative: currentObject.data.translate,
-      isTeachLanguage: currentObject.data.teach,
-      speakProf: currentObject.data.speakingProficiency.description,
-      readProf: currentObject.data.readingingProficiency.description,
-      teachLang: currentObject.data.writingProficiency.description
-    }*/
-    $scope.isSaving = true;
-    // console.log($scope.languageCodes.selectedCode)
-    // console.warn(data);
-    $scope.errorMessage = 'this is a fake error message hand-crafted at the keyboard using an over-abundance of text characters';
-    // closeEditor();
+  var deleteCompleted = function(data) {
+    $scope.isDeleting = false;
+    actionCompleted(data);
   };
-
   $scope.deleteItem = function(item) {
-    console.warn(item);
-    closeEditor();
+    // WIP console.warn(item);
+    // should throw on item.type not defined
+    return apiService.profile.delete($scope, profileFactory.deleteLanguage, {
+      type: item.type.code
+    }).then(deleteCompleted);
   };
 
   var levelMapping = {
@@ -101,6 +126,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
         loaded: true
       }
     });
+    // WIP console.warn(languages);
   };
 
   var getPerson = profileFactory.getPerson().then(parsePerson);
