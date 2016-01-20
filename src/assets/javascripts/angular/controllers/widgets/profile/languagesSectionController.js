@@ -88,8 +88,10 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     $scope.isDeleting = false;
     actionCompleted(data);
   };
+
   $scope.deleteItem = function(item) {
     // WIP console.warn(item);
+
     // should throw on item.type not defined
     return apiService.profile.delete($scope, profileFactory.deleteLanguage, {
       type: item.type.code
