@@ -24,17 +24,17 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       loaded: false,
       selectedCode: ''
     },
-    levelCodes: {
-      yes: {
+    languageLevels: [
+      {
         label: 'Yes',
         value: 'Y'
       },
-      no: {
+      {
         label: 'No',
         value: 'N'
       }
-    },
-    proficiencies: [
+    ],
+    proficiencyLevels: [
       {
         name: 'High',
         value: '1'
@@ -59,25 +59,35 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     actionCompleted(data);
   };
 
-  var saveLevel = function(level) {
+  var normalizeLanguageLevel = function(level) {
     // WIP ~ safe defaults to blank string
-    return level || '';
+    // return level && level.match(/[Y,N]/) || '';
+    var ok = _.some($scope.languageLevels, function(node) {
+      return node.value === level;
+    });
+
+    return ok && level || '';
   };
 
-  var saveProficiency = function(proficiency) {
+  var normalizeProficiencyDescription = function(proficiency) {
     // WIP ~ safe defaults to blank string
-    return proficiency && proficiency.description || '';
+    // return proficiency && proficiency.description.match(/[1,2,3]/) || '';
+    var ok = _.some($scope.proficiencyLevels, function(node) {
+      return node.value === proficiency.description;
+    });
+
+    return ok && proficiency.description || '';
   };
 
   $scope.saveItem = function(item) {
     apiService.profile.save($scope, profileFactory.postLanguage, {
       languageCode: item.code,
-      isNative: saveLevel(item.native),
-      isTranslateToNative: saveLevel(item.translate),
-      isTeachLanguage: saveLevel(item.teach),
-      speakProf: saveProficiency(item.speakingProficiency),
-      readProf: saveProficiency(item.readingProficiency),
-      teachLang: saveProficiency(item.writingProficiency)
+      isNative: normalizeLanguageLevel(item.native),
+      isTranslateToNative: normalizeLanguageLevel(item.translate),
+      isTeachLanguage: normalizeLanguageLevel(item.teach),
+      speakProf: normalizeProficiencyDescription(item.speakingProficiency),
+      readProf: normalizeProficiencyDescription(item.readingProficiency),
+      teachLang: normalizeProficiencyDescription(item.writingProficiency)
     }).then(saveCompleted);
   };
 
@@ -94,6 +104,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     $scope.addingItem = false;
     $scope.isSaving = false;
     $scope.closeEditor();
+    return false;
   };
 
   $scope.closeEditor = function() {
@@ -117,16 +128,35 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     translate: 'translator'
   };
 
+  var proficiencies = ['speaking', 'reading', 'writing'];
+
   var parseLevels = function(languages) {
     languages = _.map(languages, function(language) {
       if (!language.levels) {
         language.levels = [];
       }
       _.each(levelMapping, function(value, key) {
-        if (language[key]) {
+        // if (language[key]) {
+        // guard against unsafe or unsupported values
+        if (normalizeLanguageLevel(language[key])) {
           language.levels.push(value);
         }
       });
+
+      /*
+        now guard against unsafe or unsupported proficiency descriptions
+      */
+      var proficiencyKeys = _.map(proficiencies, function(key) {
+        return key + 'Proficiency';
+      });
+
+      _.each(proficiencyKeys, function(key) {
+        var proficiency = language[key];
+        if (proficiency) {
+          proficiency.description = normalizeProficiencyDescription(proficiency);
+        }
+      });
+
       return language;
     });
     return languages;

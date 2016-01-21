@@ -52,6 +52,24 @@
             "description": "3"
           },
           "evaluationDate": "2016-01-12"
+        },
+        {
+          "what is this??": "test for malformed data or missing properties",
+          "code": "what is this??",
+          "name": "test for malformed data or missing properties",
+          "native": "no!",
+          "translate": "",
+
+          "speakingProficiency": {
+            "description": "speaking is my proficiency"
+          },
+          "readingProficiency": {
+            "description": ""
+          },
+          "writingProficiency": {
+
+          },
+          "evaluationDate": "2016-01-12"
         }
       ]
     }

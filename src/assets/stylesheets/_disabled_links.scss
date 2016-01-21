@@ -7,3 +7,13 @@ a[disabled] {
     text-decoration: none;
   }
 }
+
+.cc-button-link[disabled~="disabled"] {
+  background-color: inherit;;
+  color: $cc-color-button-link-disabled;
+  &:hover, &:focus {
+    background-color: inherit;
+    color: $cc-color-button-link-disabled;
+    cursor: default;
+  }
+}
