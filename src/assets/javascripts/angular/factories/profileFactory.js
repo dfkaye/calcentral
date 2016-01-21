@@ -15,8 +15,8 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlDeleteLanguage = '/api/campus_solutions/language';
   //
   // WIP
-  // var urlLanguageCode = '/api/campus_solutions/language_code';
-  var urlLanguageCode = '/dummy/json/language_code.json';
+  var urlLanguageCode = '/api/campus_solutions/language_code';
+  // var urlLanguageCode = '/dummy/json/language_code.json';
   //
   // WIP
   // var urlPerson = '/api/edos/student';
@@ -44,9 +44,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     return $http.delete(urlPostEmail + '/' + options.type, options);
   };
   var deleteLanguage = function(options) {
-    // WIP console.warn(options);
+    // WIP console.warn(urlDeleteLanguage + '/' + options.jpmCatItemId);
 
-    return $http.delete(urlDeleteLanguage + '/' + options.type, options);
+    return $http.delete(urlDeleteLanguage + '/' + options.jpmCatItemId, options);
   };
   var deletePhone = function(options) {
     return $http.delete(urlPostPhone + '/' + options.type, options);

@@ -24,6 +24,16 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       loaded: false,
       selectedCode: ''
     },
+    levelCodes: {
+      yes: {
+        label: 'Yes',
+        value: 'Y'
+      },
+      no: {
+        label: 'No',
+        value: 'N'
+      }
+    },
     proficiencies: [
       {
         name: 'High',
@@ -50,10 +60,12 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var saveLevel = function(level) {
+    // WIP ~ safe defaults to blank string
     return level || '';
   };
 
   var saveProficiency = function(proficiency) {
+    // WIP ~ safe defaults to blank string
     return proficiency && proficiency.description || '';
   };
 
@@ -81,6 +93,10 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   $scope.cancelEdit = function() {
     $scope.addingItem = false;
     $scope.isSaving = false;
+    $scope.closeEditor();
+  };
+
+  $scope.closeEditor = function() {
     apiService.profile.closeEditor($scope);
   };
 
@@ -90,11 +106,8 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   $scope.deleteItem = function(item) {
-    // WIP console.warn(item);
-
-    // should throw on item.type not defined
     return apiService.profile.delete($scope, profileFactory.deleteLanguage, {
-      type: item.type.code
+      jpmCatItemId: item.code
     }).then(deleteCompleted);
   };
 
@@ -128,7 +141,6 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
         loaded: true
       }
     });
-    // WIP console.warn(languages);
   };
 
   var getPerson = profileFactory.getPerson().then(parsePerson);
@@ -148,7 +160,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var fetchLanguageCodes = function() {
-    // i like the promise api here.
+    // I like the promise api here!
     return profileFactory.getLanguageCode().then(function(data) {
       var languageCodes = sortLanguageCodes(data.data.feed.accomplishments);
       angular.extend($scope, {
@@ -158,11 +170,11 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
           selectedCode: ''
         }
       });
-      // console.warn($scope.languageCodes.content);
+      // WIP console.warn($scope.languageCodes.content);
     });
   };
 
-  // call fetch() once, return a promise for loadInformation
-  // loadInformation can be called independently for any subsequent refresh
+  // Using the promise api for fetchLanguageCodes() allows us to loadInformation
+  // once, then call loadInformation independently for any subsequent refresh.
   fetchLanguageCodes().then(loadInformation);
 });

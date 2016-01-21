@@ -2,103 +2,86 @@
 <div class="cc-page-widget-profile-section-content-item-editing" data-ng-if="items.editorEnabled">
   <form data-ng-submit="saveItem(currentObject.data)" name="cc_page_widget_languages_section">
     <div>
-      <strong>Language code</strong>
-    </div>
-    <div>
-      <input name="cc-language-code-name" id="cc-language-code-name" value="language-code" data-ng-model="currentObject.data.code" />
-      <input readonly data-ng-model="currentObject.data.name"></span>
-    </div>
-
-    <div>
-      <label forId="cc_language_code_select"><strong>Language code...</strong> <span class="cc-text-light">(Required)</span></label>
+      <label forId="cc_language_code_select"><strong>Language</strong> <span class="cc-text-light">(Required)</span></label>
     </div>
     <div class="cc-select">
-      <select data-ng-if="languageCodes" data-ng-model="currentObject.data.code" data-ng-pattern="/[a-z]{2,3}/i" id="cc_language_code_select" name="cc_language_code_select" required aria-required="true">
-        <option value="" disabled selected>Choose language...</option>
+      <select data-ng-if="languageCodes" data-ng-model="currentObject.data.code" data-ng-pattern="/[A-Z]{3,3}/" id="cc_language_code_select" name="cc_language_code_select" required aria-required="true">
+        <option value="" disabled selected>Choose...</option>
         <option data-ng-repeat="language in languageCodes.content" value="{{language.accomplishment}}">
           {{language.descr}}
         </option>
       </select>
     </div>
-
     <div>
       <label forId="cc_language_proficiency_speaking"><strong>Speaking Proficiency</strong></label>
     </div>
     <div class="cc-select">
       <select id="cc_language_proficiency_speaking" name="cc_page_widget_languages_section_proficiency_speaking" data-ng-model="currentObject.data.speakingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
-        <option value="" disabled selected>Choose speaking proficiency...</option>
+        <option value="" disabled selected>Choose...</option>
       </select>
     </div>
-
     <div>
       <label forId="cc_language_proficiency_reading"><strong>Reading Proficiency</strong></label>
     </div>
     <div class="cc-select">
       <select id="cc_language_proficiency_reading" name="cc_page_widget_languages_section_proficiency_reading" data-ng-model="currentObject.data.readingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
-        <option value="" disabled selected>Choose reading proficiency...</option>
+        <option value="" disabled selected>Choose...</option>
       </select>
     </div>
-
     <div>
       <label forId="cc_language_proficiency_writing"><strong>Writing Proficiency</strong></label>
     </div>
     <div class="cc-select">
       <select id="cc_language_proficiency_writing" name="cc_page_widget_languages_section_proficiency_writing" data-ng-model="currentObject.data.writingProficiency.description" data-ng-options="option.value as option.name for option in proficiencies">
-        <option value="" disabled selected>Choose reading proficiency...</option>
+        <option value="" disabled selected>Choose...</option>
       </select>
     </div>
-
     <div>
       <strong>Is this your native language?</strong>
     </div>
     <div>
-      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>Yes</span></label>
-      <label><input type="radio" value="N" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native"/><span>No</span></label>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native" data-ng-value="levelCodes.yes.value" /><span data-ng-bind="levelCodes.yes.label"></span></label>
+      </div>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_native" data-ng-model="currentObject.data.native" data-ng-value="levelCodes.no.value" /><span data-ng-bind="levelCodes.no.label"></label>
+      </div>
     </div>
-
     <div>
       <strong>Are you able to translate this language into your native tongue?</strong>
     </div>
     <div>
-      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>Yes</span></label>
-      <label><input type="radio" value="N" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate"/><span>No</span></label>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate" data-ng-value="levelCodes.yes.value" /><span data-ng-bind="levelCodes.yes.label"></span></label>
+      </div>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_translate" data-ng-model="currentObject.data.translate" data-ng-value="levelCodes.no.value" /><span data-ng-bind="levelCodes.no.label"></label>
+      </div>
     </div>
-
     <div>
       <strong>Are you able to teach in this language?</strong>
     </div>
-    <div >
-      <label><input type="radio" value="Y" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>Yes</span></label>
-      <label><input type="radio" value="N" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach"/><span>No</span></label>
+    <div>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach" data-ng-value="levelCodes.yes.value" /><span data-ng-bind="levelCodes.yes.label"></span></label>
+      </div>
+      <div>
+        <label><input type="radio" name="cc_page_widget_languages_section_teach" data-ng-model="currentObject.data.teach" data-ng-value="levelCodes.no.value" /><span data-ng-bind="levelCodes.no.label"></label>
+      </div>
     </div>
-
-
-<style>
-/* <!-- error class states --> */
-.cc-page-widget-section-error {
-  background-color: #fce3e5; /* $cc-color-red-light */
-  border-bottom: 1px solid #cf1715; /* $cc-color-red */
-  border-top: 1px solid #cf1715; /* $cc-color-red */
-  color: #cf1715; /* $cc-color-red */
-  margin: 10px -10px;
-  padding: 10px;
-}
-</style>
-    <div class="cc-page-widget-section-error cc-text-red" data-ng-if="errorMessage">
+    <div class="cc-page-section-error cc-text-red" data-ng-if="errorMessage">
       <i class="cc-icon-red fa fa-exclamation-circle"></i>
       <span data-ng-bind="errorMessage"></span>
     </div>
-
-    <div >
+    <div>
       <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_languages_section.cc_language_code_select.$invalid || isSaving">
         <span data-ng-if="!isSaving">Save</span>
         <span data-ng-if="isSaving">Updating...</span>
       </button>
       <button class="cc-button" data-ng-click="cancelEdit()" data-ng-disabled="isSaving">Cancel</button>
     </div>
-
     <div class="cc-nowrap" data-ng-if="!addingItem">
-      (<button class="cc-button-link" data-ng-click="deleteItem(currentObject.data)">Delete language credential</span></button>)
+      (<button class="cc-button-link" data-ng-click="deleteItem(currentObject.data)" data-ng-disabled="cc_page_widget_languages_section.cc_language_code_select.$invalid || isSaving">Delete language credential</span></button>)
     </div>
   </form>
 </div>
