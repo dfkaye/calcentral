@@ -104,7 +104,6 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     $scope.addingItem = false;
     $scope.isSaving = false;
     $scope.closeEditor();
-    return false;
   };
 
   $scope.closeEditor = function() {
