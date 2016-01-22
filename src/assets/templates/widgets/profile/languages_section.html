@@ -17,9 +17,9 @@
           (<span data-ng-bind="language.levels | andFilter"></span>)
         </span>
       </div>
-      <div data-ng-if="language.speakingProficiency.description" data-ng-bind-template="Speaking Proficiency: {{proficiencyLevels[language.speakingProficiency.description - 1].label}}"></div>
-      <div data-ng-if="language.readingProficiency.description" data-ng-bind-template="Reading Proficiency: {{proficiencyLevels[language.readingProficiency.description - 1].label}}"></div>
-      <div data-ng-if="language.writingProficiency.description" data-ng-bind-template="Writing Proficiency: {{proficiencyLevels[language.writingProficiency.description - 1].label}}"></div>
+      <div data-ng-if="language.speakingProficiency" data-ng-bind-template="Speaking Proficiency: {{ language.speakingProficiency.description }}"></div>
+      <div data-ng-if="language.readingProficiency" data-ng-bind-template="Reading Proficiency: {{ language.readingProficiency.description }}"></div>
+      <div data-ng-if="language.writingProficiency" data-ng-bind-template="Writing Proficiency: {{ language.writingProficiency.description }}"></div>
       <button class="cc-button-link" data-ng-click="showEdit(language)">Edit <span class="cc-visuallyhidden">{{ language.name }} credential</span></button>
     </div>
     <!--<div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">

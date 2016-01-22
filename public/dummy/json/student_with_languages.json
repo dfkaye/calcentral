@@ -5,53 +5,59 @@
         {
           "code": "LEN",
           "name": "English",
-          "native": "Y",
-          "translate": "N",
-          "teach": "Y",
+          "native": true,
+          "translate": false,
+          "teach": false,
           "speakingProficiency": {
-            "description": "1"
+            "code": "3",
+            "description": "High"
           },
           "readingProficiency": {
-            "description": "1"
+            "code": "2",
+            "description": "Moderate"
           },
           "writingProficiency": {
-            "description": "2"
-          },
-          "evaluationDate": "2012-11-27"
+            "code": "1",
+            "description": "Low"
+          }
         },
         {
           "code": "LAN",
           "name": "Armenian",
-          "native": "N",
-          "translate": "Y",
-          "teach": "N",
+          "native": false,
+          "translate": true,
+          "teach": false,
           "speakingProficiency": {
-            "description": "2"
+            "code": "2",
+            "description": "Moderate"
           },
           "readingProficiency": {
-            "description": "2"
+            "code": "2",
+            "description": "Moderate"
           },
           "writingProficiency": {
-            "description": "2"
-          },
-          "evaluationDate": "2016-01-12"
+            "code": "2",
+            "description": "Moderate"
+          }
         },
         {
           "code": "LCH",
           "name": "Chinese",
-          "native": "N",
-          "translate": "N",
-          "teach": "N",
+          "native": false,
+          "translate": false,
+          "teach": false,
           "speakingProficiency": {
-            "description": "3"
+            "code": "1",
+            "description": "Low"
           },
           "readingProficiency": {
-            "description": "3"
+            "code": "1",
+            "description": "Low"
           },
           "writingProficiency": {
-            "description": "3"
-          },
-          "evaluationDate": "2016-01-12"
+            "code": "1",
+            "description": "Low"
+          }
         },
         {
           "what is this??": "test for malformed data or missing properties",
@@ -64,12 +70,11 @@
             "description": "speaking is my proficiency"
           },
           "readingProficiency": {
-            "description": ""
+            "code": "4"
           },
           "writingProficiency": {
 
-          },
-          "evaluationDate": "2016-01-12"
+          }
         }
       ]
     }

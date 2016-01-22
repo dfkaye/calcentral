@@ -26,25 +26,27 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     languageLevels: [
       {
         label: 'Yes',
-        value: 'Y'
+        postValue: 'Y',
+        value: true
       },
       {
         label: 'No',
-        value: 'N'
+        postValue: 'N',
+        value: false
       }
     ],
     proficiencyLevels: [
       {
         label: 'High',
-        value: '1'
+        value: '3'
       },
       {
-        label: 'Medium',
+        label: 'Moderate',
         value: '2'
       },
       {
         label: 'Low',
-        value: '3'
+        value: '1'
       }
     ]
   });
@@ -59,29 +61,23 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var normalizeLanguageLevel = function(level) {
-    // WIP ~ safe defaults to blank string
-    // return level && level.match(/[Y,N]/) || '';
-    var ok = _.some($scope.languageLevels, function(node) {
-      return node.value === level;
-    });
-
-    return ok && level || '';
+    // WIP ~ safe defaults to 'Y' or 'N'
+    var index = (level) ? 0 : 1;
+    return $scope.languageLevels[index].postValue;
   };
 
-  var normalizeProficiencyDescription = function(proficiency) {
+  var normalizeProficiencyCode = function(proficiency) {
     // WIP ~ safe defaults to blank string
-    // return proficiency && proficiency.description.match(/[1,2,3]/) || '';
+    // return proficiency && proficiency.code.match(/[1,2,3]/) || '';
     var ok = false;
-
     // guard against null/undefined proficiency object
     // editor warns about != but it's justified here
-    if (proficiency != null && 'description' in proficiency) {
+    if (proficiency != null && 'code' in proficiency) {
       ok = _.some($scope.proficiencyLevels, function(node) {
-        return node.value === proficiency.description;
+        return node.value === proficiency.code;
       });
     }
-
-    return ok && proficiency.description || '';
+    return ok && proficiency.code || '';
   };
 
   $scope.saveItem = function(item) {
@@ -90,9 +86,9 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       isNative: normalizeLanguageLevel(item.native),
       isTranslateToNative: normalizeLanguageLevel(item.translate),
       isTeachLanguage: normalizeLanguageLevel(item.teach),
-      speakProf: normalizeProficiencyDescription(item.speakingProficiency),
-      readProf: normalizeProficiencyDescription(item.readingProficiency),
-      teachLang: normalizeProficiencyDescription(item.writingProficiency)
+      speakProf: normalizeProficiencyCode(item.speakingProficiency),
+      readProf: normalizeProficiencyCode(item.readingProficiency),
+      teachLang: normalizeProficiencyCode(item.writingProficiency)
     }).then(saveCompleted);
   };
 
@@ -133,6 +129,9 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   };
 
   var proficiencies = ['speaking', 'reading', 'writing'];
+  var proficiencyKeys = _.map(proficiencies, function(key) {
+    return key + 'Proficiency';
+  });
 
   var parseLevels = function(languages) {
     languages = _.map(languages, function(language) {
@@ -140,27 +139,17 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
         language.levels = [];
       }
       _.each(levelMapping, function(value, key) {
-        // if (language[key]) {
-        // guard against unsafe or unsupported values
-        if (normalizeLanguageLevel(language[key])) {
+        if (language[key]) {
           language.levels.push(value);
         }
       });
-
-      /*
-        now guard against unsafe or unsupported proficiency descriptions
-      */
-      var proficiencyKeys = _.map(proficiencies, function(key) {
-        return key + 'Proficiency';
-      });
-
+      // guard against unsafe or unsupported proficiency code
       _.each(proficiencyKeys, function(key) {
         var proficiency = language[key];
         if (proficiency) {
-          proficiency.description = normalizeProficiencyDescription(proficiency);
+          proficiency.code = normalizeProficiencyCode(proficiency);
         }
       });
-
       return language;
     });
     return languages;
@@ -169,6 +158,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   var parsePerson = function(data) {
     var person = data.data.feed.student;
     var languages = parseLevels(person.languages);
+
     angular.extend($scope, {
       items: {
         content: languages,
@@ -177,9 +167,11 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     });
   };
 
-  var getPerson = profileFactory.getPerson().then(parsePerson);
+  var loadInformation = function(options) {
+    var getPerson = profileFactory.getPerson({
+      refreshCache: _.get(options, 'refresh')
+    }).then(parsePerson);
 
-  var loadInformation = function() {
     $scope.isLoading = true;
     $q.all(getPerson).then(function() {
       $scope.isLoading = false;
