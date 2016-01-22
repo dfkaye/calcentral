@@ -21,8 +21,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     },
     languageCodes: {
       content: [],
-      loaded: false,
-      selectedCode: ''
+      loaded: false
     },
     languageLevels: [
       {
@@ -72,9 +71,15 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
   var normalizeProficiencyDescription = function(proficiency) {
     // WIP ~ safe defaults to blank string
     // return proficiency && proficiency.description.match(/[1,2,3]/) || '';
-    var ok = _.some($scope.proficiencyLevels, function(node) {
-      return node.value === proficiency.description;
-    });
+    var ok = false;
+
+    // guard against null/undefined proficiency object
+    // editor warns about != but it's justified here
+    if (proficiency != null && 'description' in proficiency) {
+      ok = _.some($scope.proficiencyLevels, function(node) {
+        return node.value === proficiency.description;
+      });
+    }
 
     return ok && proficiency.description || '';
   };
@@ -195,8 +200,7 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
       angular.extend($scope, {
         languageCodes: {
           content: languageCodes,
-          loaded: true,
-          selectedCode: ''
+          loaded: true
         }
       });
       // WIP console.warn($scope.languageCodes.content);
