@@ -36,15 +36,15 @@ angular.module('calcentral.controllers').controller('LanguagesSectionController'
     ],
     proficiencyLevels: [
       {
-        name: 'High',
+        label: 'High',
         value: '1'
       },
       {
-        name: 'Medium',
+        label: 'Medium',
         value: '2'
       },
       {
-        name: 'Low',
+        label: 'Low',
         value: '3'
       }
     ]
