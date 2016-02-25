@@ -16,6 +16,7 @@ module User
       if is_cs_profile_feature_enabled
         @edo_attributes ||= HubEdos::UserAttributes.new(user_id: @uid).get
       end
+      @roles = get_campus_roles
       @default_name ||= get_campus_attribute('person_name', :string)
       @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
       @first_name ||= get_campus_attribute('first_name', :string) || ''
@@ -26,7 +27,9 @@ module User
 
     # Split brain three ways until some subset of the brain proves more trustworthy.
     def get_campus_attribute(field, format)
-      if is_sis_profile_visible? && @edo_attributes[:noStudentId].blank? && (edo_attribute = @edo_attributes[field.to_sym])
+      if is_sis_profile_visible? &&
+        (@roles[:student] || @roles[:applicant]) &&
+        @edo_attributes[:noStudentId].blank? && (edo_attribute = @edo_attributes[field.to_sym])
         begin
           validated_edo_attribute = validate_attribute(edo_attribute, format)
         rescue
@@ -140,6 +143,7 @@ module User
     def get_feed_internal
       google_mail = User::Oauth2Data.get_google_email(@uid)
       canvas_mail = User::Oauth2Data.get_canvas_email(@uid)
+      primary_email_address = get_campus_attribute('email_address', :string)
       official_bmail_address = get_campus_attribute('official_bmail_address', :string)
       current_user_policy = authentication_state.policy
       is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
@@ -147,7 +151,7 @@ module User
       is_calendar_opted_in = Calendar::User.where(:uid => @uid).first.present?
       has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
       has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
-      roles = get_campus_roles
+      roles = @roles
       {
         :isSuperuser => current_user_policy.can_administrate?,
         :isViewer => current_user_policy.can_view_as?,
