@@ -144,8 +144,25 @@ describe User::Api do
   end
 
   describe 'profile source of record' do
-    let(:delegate_students) { {} }
-    subject { User::Api.new(uid).get_feed }
+    before do
+      allow(CalnetLdap::UserAttributes).to receive(:new).with(user_id: @random_id).and_return double(get_feed: ldap_attributes)
+      allow(HubEdos::UserAttributes).to receive(:new).and_return double(get: edo_attributes)
+    end
+    subject { User::Api.new(@random_id).get_feed }
+    let(:edo_attributes) do
+      {
+        person_name: @preferred_name,
+        student_id: '1234567890',
+        campus_solutions_id: 'CC12345678',
+        official_bmail_address: 'foo@foo.com',
+        roles: {
+          student: true,
+          exStudent: false,
+          faculty: false,
+          staff: false
+        }
+      }
+    end
     let(:ldap_attributes) do
       {
         official_bmail_address: 'bar@bar.edu',
@@ -172,7 +189,7 @@ describe User::Api do
     context 'applicant' do
       let(:edo_attributes) do
         {
-          person_name: preferred_name,
+          person_name: @preferred_name,
           student_id: '1234567890',
           campus_solutions_id: 'CC12345678',
           official_bmail_address: 'foo@foo.com',
