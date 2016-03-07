@@ -1,0 +1,171 @@
+<div class="cc-page-widget-profile-section-content-item-editing" data-ng-if="items.editorEnabled">
+  <form data-ng-submit="saveItem(currentObject.data)" name="cc_page_widget_profile_emergency_contact">
+    <div>
+      <label for="cc-page-widget-profile-emergency-contact-name"><strong>Contact Name</strong> <span class="cc-text-light">(Required)</span></label>
+    </div>
+    <div>
+      <input id="cc-page-widget-profile-emergency-contact-name" required aria-required="true" type="text" data-ng-model="currentObject.data.name" />
+    </div>
+
+    <div>
+      <label for="cc-page-widget-profile-emergency-contact-relationship"><strong>Relationship</strong> <span class="cc-text-light">(Required)</span></label>
+    </div>
+    <div class="cc-select">
+      <select id="cc-page-widget-profile-emergency-contact-relationship" required aria-required="true" data-ng-if="relationshipTypes" data-ng-model="currentObject.data.relationship.code" data-ng-options="type.fieldvalue as type.xlatlongname for type in relationshipTypes">
+        <option value="" disabled selected>Choose&hellip;</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="cc-page-widget-profile-emergency-contact-email"><strong>Email Address</strong></label>
+    </div>
+    <div>
+      <input id="cc-page-widget-profile-emergency-contact-email" type="text" data-ng-model="currentObject.data.email.emailAddress" />
+    </div>
+
+
+    <!-- MAKE THESE INCLUDES FOR PHONE AND PHONE EDITOR TEMPLATES -->
+    <div data-ng-repeat="phone in currentObject.data.phones">
+      <div class="cc-static-phone-data" data-ng-if="!phone.isEditing"><!-- DATA-NG-INCLUDE EMC-PHONE -->
+        <strong data-ng-bind="phone.type.description"></strong>
+        <div>
+          <span data-ng-bind="phone.number"></span>
+        </div>
+        <div data-ng-if="phone.extension">
+          Ext. <span data-ng-bind="phone.extension"></span>
+        </div>
+        <div data-index="{{index}}">
+          <button class="cc-button-link" type="button" data-ng-click="editPhone(phone)">Edit</button>
+          <span> | </span>
+          <button class="cc-button-link" type="button" data-index="{{index}}" data-ng-click="deletePhone(phone)">Delete</button>
+        </div>
+      </div>
+      <fieldset class="cc-page-widget-profile-fieldset" data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-{{$index}}" data-ng-if="phone.isEditing"><!-- DATA-NG-INCLUDE EMC-PHONE-EDITOR -->
+        <div>
+          <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-type-{{$index}}"><strong>Phone Type</strong> <span class="cc-text-light">(Required)</span></label>
+        </div>
+        <div class="cc-select">
+          <select data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-type-{{$index}}" required aria-required="true" data-ng-if="phoneTypes" data-ng-model="phone.type.code" data-ng-options="type.fieldvalue as type.xlatlongname for type in phoneTypes">
+            <option value="" disabled selected>Choose&hellip;</option>
+          </select>
+        </div>
+        <div>
+          <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-number-{{$index}}"><strong>Phone Number</strong> <span class="cc-text-light">(Required)</span></label>
+        </div>
+        <div>
+          <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-number-{{$index}}" required aria-required="true" type="text" data-ng-model="phone.number" />
+        </div>
+        <div>
+          <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-extension-{{$index}}"><strong>Phone Extension</strong></label>
+        </div>
+        <div>
+          <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-extension-{{$index}}" type="text" data-ng-model="phone.extension" />
+        </div>
+      </fieldset>
+    </div>
+<!--
+    <fieldset class="cc-page-widget-profile-fieldset" data-ng-repeat="phone in currentObject.data.phones">
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-type-{{$index}}"><strong>Phone Type</strong> <span class="cc-text-light">(Required)</span></label>
+      </div>
+      <div class="cc-select">
+        <select data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-type-{{$index}}" required aria-required="true" data-ng-if="phoneTypes" data-ng-model="phone.type.code" data-ng-options="type.fieldvalue as type.xlatlongname for type in phoneTypes">
+          <option value="" disabled selected>Choose&hellip;</option>
+        </select>
+      </div>
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-number-{{$index}}"><strong>Phone Number</strong> <span class="cc-text-light">(Required)</span></label>
+      </div>
+      <div>
+        <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-number-{{$index}}" required aria-required="true" type="text" data-ng-model="phone.number" />
+      </div>
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-phone-extension-{{$index}}"><strong>Phone Extension</strong></label>
+      </div>
+      <div>
+        <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-phone-extension-{{$index}}" type="text" data-ng-model="phone.extension" />
+      </div>
+    </fieldset>
+-->
+
+    <fieldset class="cc-page-widget-profile-fieldset" data-ng-attr-id="cc-page-widget-profile-emergency-contact-add-phone">
+      <legend>form for adding a phone</legend>
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-add-phone-type"><strong>Phone Type</strong> <span class="cc-text-light">(Required)</span></label>
+      </div>
+      <div class="cc-select">
+        <select data-ng-attr-id="cc-page-widget-profile-emergency-contact-add-phone-type" required aria-required="true" data-ng-if="phoneTypes" data-ng-model="newPhones" data-ng-options="type.fieldvalue as type.xlatlongname for type in phoneTypes">
+          <option value="" disabled selected>Choose&hellip;</option>
+        </select>
+      </div>
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-add-phone-number"><strong>Phone Number</strong> <span class="cc-text-light">(Required)</span></label>
+      </div>
+      <div>
+        <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-add-phone-number" required aria-required="true" type="text" data-ng-model="newPhones" />
+      </div>
+      <div>
+        <label data-ng-attr-for="cc-page-widget-profile-emergency-contact-add-phone-extension"><strong>Phone Extension</strong></label>
+      </div>
+      <div>
+        <input data-ng-attr-id="cc-page-widget-profile-emergency-contact-add-phone-extension" type="text" data-ng-model="newPhones" />
+      </div>
+    </fieldset>
+
+
+    <div><i>(( not working yet ))</i>
+      <button class="cc-button-link" type="button">
+        <i class="fa fa-plus cc-text-small"></i> Add a phone number
+      </button>
+    </div>
+
+    <div>
+      <label for="cc-page-widget-profile-emergency-contact-country"><strong>Country</strong> <span class="cc-text-light">(Required)</span></label>
+    </div>
+    <div class="cc-select">
+      <select id="cc-page-widget-profile-emergency-contact-country" required aria-required="true" data-ng-if="countries" data-ng-model="currentObject.data.address.countryCode" data-ng-options="country.country as country.descr for country in countries">
+        <option value="" disabled selected>Choose&hellip;</option>
+      </select>
+    </div>
+    <div data-cc-spinner-directive="currentObject.whileAddressFieldsLoading">
+      <div data-ng-repeat="field in currentObject.addressFields" data-ng-if="field.field !== 'country'">
+        <div>
+          <label data-ng-attr-for="cc-page-widget-profile-field-{{$index}}">
+            <strong data-ng-bind="field.label"></strong>
+          </label>
+        </div>
+        <div data-ng-if="field.field !== 'state' || !states.length">
+          <input type="text" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data.address[field.field]" data-ng-attr-maxlength="{{field.length}}" />
+        </div>
+        <div data-ng-if="field.field === 'state' && states.length">
+          <div class="cc-select">
+            <select data-ng-options="state.state as state.descr for state in states" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data.address.stateCode">
+              <option value="" disabled selected>Choose {{field.label}}&hellip;</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <input id="cc-page-widget-profile-emergency-contact-preferred" type="checkbox" data-ng-model="currentObject.data.preferred" />
+      <label>Primary Contact</label>
+    </div>
+
+    <div class="cc-page-widget-profile-section-error cc-text-red" data-ng-if="errorMessage">
+      <i class="cc-icon-red fa fa-exclamation-circle"></i>
+      <span data-ng-bind="errorMessage"></span>
+    </div>
+
+    <div>
+      <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_emergency_contact.$invalid || isSaving">
+        <span data-ng-if="!isSaving">Save</span>
+        <span data-ng-if="isSaving">Updating&hellip;</span>
+      </button>
+      <button class="cc-button" type="button" data-ng-click="cancelEdit()" data-ng-disabled="isSaving">Cancel</button>
+    </div>
+    <div class="cc-nowrap" data-ng-if="!currentObject.isAdding">
+      (<button class="cc-button-link" type="button" data-ng-click="deleteItem(currentObject.data)" data-ng-disabled="isSaving">Delete emergency contact</span></button>)
+    </div>
+  </form>
+</div>
