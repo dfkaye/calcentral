@@ -6,7 +6,7 @@ describe CampusSolutions::AdvisingResources do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       # links come from AdvisingResources
-      expect(subject[:feed][:links].count).to eq 9
+      expect(subject[:feed][:links].count).to be >= 8
       # cs_links come from models/campus_solutions/link.rb
       expect(subject[:feed][:csLinks].count).to be >= 5
     end
@@ -38,10 +38,14 @@ describe CampusSolutions::AdvisingResources do
       let(:student_uid) { '61889' }
       let(:student_cs_id) { '11667051' }
       let(:proxy) { CampusSolutions::AdvisingResources.new(fake: true, user_id: user_id, student_uid: student_uid) }
+
       before do
         allow(CalnetCrosswalk::ByUid).to receive(:new).with(user_id: student_uid).and_return(
           double(lookup_campus_solutions_id: student_cs_id))
+
+        allow(proxy).to receive(:fetch_academic_career).and_return('GRAD')
       end
+
       it 'should query for advisor and student EMPLID' do
         proxy.get
         expect(a_request(:get, /UC_AA_ADVISING_RESOURCES.v1\/UC_ADVISING_RESOURCES/).with(query: {
@@ -49,6 +53,11 @@ describe CampusSolutions::AdvisingResources do
           'STUDENT_EMPLID' => student_cs_id
         })).to have_been_made
       end
+
+      it 'should replace student emplid and acad_career placeholders' do
+        expect(proxy.get[:feed][:csLinks][:studentServiceIndicators][:url]).to eq('https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/MAINTAIN_SERVICE_IND_STDNT.ACTIVE_SRVC_INDICA.GBL?EMPLID=11667051&ACAD_CAREER=GRAD')
+      end
+
       context 'student EMPLID lookup failure' do
         let(:student_cs_id) { nil }
         it 'should report failure' do
